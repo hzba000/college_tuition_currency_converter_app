@@ -1,5 +1,5 @@
-'use strict'
 //Note: Sometimes(Not often) countries are slow to load from API, give it a sec to populate search form
+'use strict'
 
 const Url="https://api.data.gov/ed/collegescorecard/v1/schools.json?";
 let globalCountry = undefined;
@@ -8,8 +8,8 @@ let globalCountry = undefined;
 function watchCountrySubmit(){
   $('.country-question-form').submit(function(event){
     event.preventDefault();
-    $(`.chosen-result`).html(''); //Clear Previous Selection
-    $(`.js-results-holder`).html(''); // Clear Previous Selection
+    $('.chosen-result').html(''); //Clear Previous Selection
+    $('.js-results-holder').html(''); // Clear Previous Selection
     watchSubmit();
 
     //Handles Orange Check Mark for Search Forms
@@ -23,8 +23,8 @@ function watchCountrySubmit(){
 function watchSubmit(){
   $('#js-search-form').submit(function(event) {
     event.preventDefault();
-    $(`.chosen-result`).html(''); //Clear Previous Selection
-    $(`.js-results-holder`).html('')//Clear Previous Selection
+    $('.chosen-result').html(''); //Clear Previous Selection
+    $('.js-results-holder').html('')//Clear Previous Selection
     $('.results-header').removeClass('hidden'); //Reveal Header for Results
     const userSubmission = $('#js-search-box').val(); //Save user search term to userSubmission
     $('#js-search-box').val(''); //Clear Value after saving search term
@@ -80,7 +80,9 @@ function loadColleges(data){
            <div>
               <p>Tuition in USD</p>
               <p> $${Math.trunc(college_tuition_out_state).toLocaleString()}</p>
-           </div><span><img src="fast_Forward.png" alt="right-arrow"></span>
+           </div>
+           
+           <span><img src="fast_Forward.png" alt="right-arrow"></span>
            
            <div>
               <p>Tuition in ${globalCurrencyId}</p>
@@ -112,7 +114,7 @@ function getCountryApi(){
 function loadCountries(data){
   const results = data.results;
   for(let countryCode in results){
-    $(`#country-choices`).append(`<option value="${results[countryCode].name}"> ${results[countryCode].name} </option>`);
+    $('#country-choices').append(`<option value="${results[countryCode].name}"> ${results[countryCode].name} </option>`);
     countryIdArray.push(results[countryCode].name);
     currencyIdArray.push(results[countryCode].currencyId);
     symbolArray.push(results[countryCode].currencySymbol);
@@ -122,12 +124,12 @@ function loadCountries(data){
 
 //Saves user country choice
 function watchSubmitCountry(){
-  $(`.country-question-form`).submit(event => {
+  $('.country-question-form').submit(event => {
     event.preventDefault();
     const userSubmission =  $(`#country-choices`).val();
     const countryChoice = userSubmission;
     globalCountry = userSubmission;
-    $(`#country-choices`).val('');
+    $('#country-choices').val('');
     console.log(`Country: ${countryChoice}`);
     
 //Matches country choice to currency    
